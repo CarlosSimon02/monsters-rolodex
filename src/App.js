@@ -1,6 +1,5 @@
 import { Component } from "react";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
@@ -8,14 +7,18 @@ class App extends Component {
     super();
 
     this.state = {
-      name: "Simon",
+      monster1: { name: "Balmond" },
+      monster2: { name: "Terizla" },
+      monster3: { name: "Barats" },
     };
   }
 
   render() {
     return (
       <div className="App">
-        <button></button>
+        <h1>{this.state.monster1.name}</h1>
+        <h1>{this.state.monster2.name}</h1>
+        <h1>{}</h1>
       </div>
     );
   }

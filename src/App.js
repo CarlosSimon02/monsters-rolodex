@@ -11,10 +11,6 @@ class App extends Component {
       name: "Simon"
     }
   }
-
-  setState() {
-    this.state.name = "Klark";
-  }
   
   render() {
     return (
@@ -24,7 +20,7 @@ class App extends Component {
           <p>
             Hello {this.state.name}.
           </p>
-          <button onClick={this.setState}>Change Name</button>
+          <button>Change Name</button>
         </header>
       </div>
     );

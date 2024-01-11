@@ -8,19 +8,24 @@ class App extends Component {
     super();
 
     this.state = {
-      name: "Simon"
-    }
+      name: "Simon",
+    };
   }
-  
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hello {this.state.name}.
-          </p>
-          <button>Change Name</button>
+          <p>Hello {this.state.name}.</p>
+          <button
+            onClick={() => {
+              this.setState({love: "Charles"});
+              console.log(this.state);
+            }}
+          >
+            Change Name
+          </button>
         </header>
       </div>
     );

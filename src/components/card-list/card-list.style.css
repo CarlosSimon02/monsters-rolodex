@@ -1,0 +1,11 @@
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card-container {
+    background-color: red;
+    width: 300px;
+}

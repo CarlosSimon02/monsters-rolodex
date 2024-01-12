@@ -12,20 +12,43 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
     fetch("http://jsonplaceholder.typicode.com/users")
       .then((response) => {
         return response.json();
       })
       .then((users) => {
-        console.log(users);
         this.setState(() => ({ monsters: users }));
       });
+  }
+
+  filterMonsters(value) {
+    if(value) {
+      const filteredMonsters = this.state.monsters.filter((monster) => {
+        return monster.name.toLowerCase().includes(value.toLowerCase());
+      });
+
+    this.setState(() => ({monsters: filteredMonsters}));
+
+    } else {
+      this.fetchData();
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <input type="text" placeholder="Search monster"></input>
+        <input
+          className="search-box"
+          type="search"
+          placeholder="Search monster"
+          onChange={(event) => {
+            this.filterMonsters(event.target.value);
+          }}
+        />
         {this.state.monsters.map((monster) => {
           return <h1 key={monster.id}>{monster.name}</h1>;
         })}

@@ -1,12 +1,10 @@
 import { Component } from "react";
-
+import CardList from "./components/card-list/cardList.component";
 import "./App.css";
 
 class App extends Component {
   constructor() {
     super();
-
-    this.allMonsters = [];
 
     this.state = {
       monsters: [],
@@ -20,16 +18,19 @@ class App extends Component {
         return response.json();
       })
       .then((users) => {
-        this.allMonsters = users;
-        this.setState(() => ({ monsters: this.allMonsters }));
+        this.setState(() => ({ monsters: users }));
       });
   }
 
+  onSearchChange = (event) => {
+    this.setState(() => ({ searchValue: event.target.value }));
+  };
+
   render() {
-    const filteredMonsters = this.allMonsters.filter((monster) => {
-      return monster.name
-        .toLowerCase()
-        .includes(this.state.searchValue.toLowerCase());
+    const { monsters, searchValue } = this.state;
+    const { onSearchChange: w } = this;
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchValue.toLowerCase());
     });
 
     return (
@@ -38,13 +39,9 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="Search monster"
-          onChange={(event) => {
-            this.setState(() => ({searchValue: event.target.value}))
-          }}
+          onChange={w}
         />
-        {filteredMonsters.map((monster) => {
-          return <h1 key={monster.id}>{monster.name}</h1>;
-        })}
+        <CardList monsters={filteredMonsters}/>
       </div>
     );
   }

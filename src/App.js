@@ -25,6 +25,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <input type="text" placeholder="Search monster"></input>
         {this.state.monsters.map((monster) => {
           return <h1 key={monster.id}>{monster.name}</h1>;
         })}

@@ -6,6 +6,8 @@ class App extends Component {
   constructor() {
     super();
 
+    this.allMonsters = [];
+
     this.state = {
       monsters: [],
     };
@@ -21,21 +23,17 @@ class App extends Component {
         return response.json();
       })
       .then((users) => {
-        this.setState(() => ({ monsters: users }));
+        this.allMonsters = users;
+        this.setState(() => ({ monsters: this.allMonsters }));
       });
   }
 
   filterMonsters(value) {
-    if(value) {
-      const filteredMonsters = this.state.monsters.filter((monster) => {
-        return monster.name.toLowerCase().includes(value.toLowerCase());
-      });
+    const filteredMonsters = this.allMonsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(value.toLowerCase());
+    });
 
-    this.setState(() => ({monsters: filteredMonsters}));
-
-    } else {
-      this.fetchData();
-    }
+    this.setState(() => ({ monsters: filteredMonsters }));
   }
 
   render() {

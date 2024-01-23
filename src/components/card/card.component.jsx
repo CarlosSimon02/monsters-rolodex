@@ -2,7 +2,6 @@ import "./card.styles.css";
 
 const Card = ({monster}) => {
   const { id, name, email } = monster;
-  console.log(`rerendered ${name} - ${id}`);
 
   return (
     <div className="card-container" key={id}>

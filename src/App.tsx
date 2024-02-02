@@ -1,23 +1,38 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 
 import CardList from "./components/card-list/card-list.component";
 import SearchBar from "./components/search-bar/search-bar.component";
 import "./App.css";
+import { getData } from "./utils/fetch.utils";
+
+export type Monster = {
+  id: string;
+  name: string;
+  email: string;
+};
 
 const App = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [monsters, setMonsters] = useState([]);
-  const [filteredMonsters, setFilteredMonsters] = useState([]);
-  const [titleValue, setTitleValue] = useState('');
+  const [monsters, setMonsters] = useState<Monster[]>([]);
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
+  const [titleValue, setTitleValue] = useState("");
 
   useEffect(() => {
-    fetch("http://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        return response.json();
-      })
-      .then((users) => {
-        setMonsters(users);
-      });
+    // fetch("http://jsonplaceholder.typicode.com/users")
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((users) => {
+    //     setMonsters(users);
+    //   });
+    const fetchUsers = async () => {
+      const users = await getData<Monster[]>(
+        "http://jsonplaceholder.typicode.com/users"
+      );
+      setMonsters(users);
+    };
+
+    fetchUsers();
   }, []);
 
   useEffect(() => {
@@ -28,15 +43,15 @@ const App = () => {
     );
   }, [searchValue, monsters]);
 
-  const onSearchChange = (event) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchValue(searchFieldString);
   };
 
-  const onTitleChange = (event) => {
+  const onTitleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setTitleValue(searchFieldString);
-  }
+  };
 
   return (
     <div className="App">
@@ -46,7 +61,7 @@ const App = () => {
         placeholder="Search monster"
         className="search-bar"
       />
-      <br/>
+      <br />
       <SearchBar
         onChangeHandler={onTitleChange}
         placeholder="Set Title"
